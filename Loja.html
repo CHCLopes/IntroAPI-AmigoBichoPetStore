@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <header>
+    <meta charset="utf-8"/>
+    <meta name="loja " content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="lojastyles.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <script type="text/javascript" src="./lojajs.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <div class="topbar">
+      <div class="botoes1">
+        <div class="menu">
+          <div class="menubutton"></div>
+          <div class="menutitle">MENU</div>
+        </div>
+        <div class="carrinho">
+          <div class="carrinhobutton"></div>
+          <div class="carrinhotitle">Seu Carrinho</div>
+        </div>
+      </div>
+         <div class="logotxt"></div>
+      <div class="login">
+          <div class="profile"></div>
+          <div class="profiletext">
+            <div class="entrar" title='Já é da casa? Acesse seu perfil'>Entre na sua Conta</div>            
+            <p class="ou">ou</p>
+            <div class="cadastro" title="1.ª vez? Seja muito bem-vindo!">Cadastre-se</div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <body>
+     <div class="toolbar">
+      <div class="tipo">
+        O que você procura?
+        <div class="serviço">Serviços</div>
+        <div class="produto">Produtos</div>
+      </div>
+      <div class="pesquisa" id="pesquisa">
+        <input class="caixadepesuisa" type="text" id="txtBusca" placeholder="Buscar"/>
+        <div class="lupa" title="Buscar"></div>
+      </div>
+     </div>
+    <div class="classbar">
+      <div class="vercomo">
+        Ver como:
+        <div class="grade">Grade</div>
+        <div class="lista">Lista</div>
+      </div>
+      <div class="verpor">
+        Ver por:
+        <div class="pornome">Nome</div>
+        <div class="porpreco">Preço</div>
+      </div>
+      <div class="verdo">
+        Ver do:
+        <div class="maior">Maior</div>
+        <div class="menor">Menor</div>
+      </div>
+    </div>
+    <div class="adote">
+    <div class="adotebox1">
+<div class="adotebutton1"> Adote!</div> 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <div id="app">
+    <v-app class="app2">
+      <v-content >
+        <v-container class="app3">
+
+            <v-layout align-center justify-center >
+                <v-btn color="green" dark large @click="loadNextImage" >
+                    Another &nbsp; <v-icon>refresh</v-icon>
+                </v-btn>
+            </v-layout>
+
+            <v-layout row wrap>
+                <v-flex xs12 >
+                <v-card flat tile class="d-flex">
+                    <v-img :src="image.url" contain>
+                    </v-img>
+                </v-card>
+                </v-flex>
+            </v-layout>
+
+        </v-container>
+      </v-content>
+    </v-app>
+  </div>
+  </div>
+      <script>
+        new Vue({ 
+            el: '#app',
+            vuetify: new Vuetify(),
+            data: {
+                image: { url: ""}
+            },
+            created(){
+                this.loadNextImage();
+            } ,
+            methods:{
+                async loadNextImage()
+                {
+                    try{
+                        axios.defaults.headers.common['x-api-key'] = "5580a7f0-6429-4983-b81e-895cbd329ba5" // Replace this with your API Key
+    
+                        let response = await axios.get('https://api.thecatapi.com/v1/images/search', { params: { limit:1, size:"full" } } ) // Ask for 1 Image, at full resolution
+                        
+                        this.image = response.data[0] // the response is an Array, so just use the first item as the Image
+    
+                        console.log("-- Image from TheCatAPI.com")
+                        console.log("id:", this.image.id)
+                        console.log("url:", this.image.url)
+    
+                    }catch(err){
+                        console.log(err)
+                    }
+                }
+            }
+        })
+        </script>
+      </div>
+</div>
+</body>
+
+
+</html>
